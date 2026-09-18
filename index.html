@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Monse 🌼</title>
+<style>
+  *{ box-sizing:border-box; }
 
+  html,body{
+    margin:0; padding:0; min-height:100%;
+    font-family:Georgia,'Times New Roman',serif;
+    background:linear-gradient(180deg,#fff8e4 0%,#ffeab6 55%,#ffe0a0 100%);
+    color:#5b4630;
+    overflow-x:hidden;
+  }
+
+  .scene{
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:26px 14px;
+  }
+
+  .title{ font-size:1.9rem; margin:0 0 6px; color:#a97b1f; text-align:center; letter-spacing:1px; }
+  .subtitle{ margin:0 0 16px; font-style:italic; color:#8a6a3a; text-align:center; }
+
+  .bouquet-wrap{ width:min(94vw,560px); }
+  .bouquet-wrap svg{ width:100%; height:auto; display:block;
+    filter:drop-shadow(0 16px 24px rgba(120,90,30,.25)); }
+
+  /* Las animaciones van en grupos SIN atributo transform propio,
+     con transform-box: fill-box para no romper la posición del SVG. */
+  .sway,.breathe,.leaf{ transform-box: fill-box; }
+
+  .sway{ transform-origin:50% 100%; animation:sway 6.5s ease-in-out infinite; }
+  .sway.alt{ animation-name:swayAlt; animation-duration:7.8s; }
+  .sway.slow{ animation-duration:9s; }
+
+  .breathe{ transform-origin:50% 50%; animation:breathe 5.5s ease-in-out infinite; }
+  .leaf{ transform-origin:50% 100%; animation:floatLeaf 7s ease-in-out infinite; }
+
+  @keyframes sway{ 0%,100%{transform:rotate(-1.3deg)} 50%{transform:rotate(1.3deg)} }
+  @keyframes swayAlt{ 0%,100%{transform:rotate(1.1deg)} 50%{transform:rotate(-1.1deg)} }
+  @keyframes breathe{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+  @keyframes floatLeaf{ 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-3px) rotate(-2.5deg)} }
+
+  footer{ margin-top:22px; font-size:.85rem; color:#a3854f; }
+
+  .overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(90,65,20,.35);
+    display:flex; align-items:center; justify-content:center;
+    opacity:1; transition:opacity .45s ease;
+  }
+  .overlay.hidden{ opacity:0; pointer-events:none; }
+
+  .popup{
+    background:#fdf6ec; border:1px solid #f0dfb8; border-radius:18px;
+    width:88%; max-width:400px; padding:30px 26px; text-align:center;
+    box-shadow:0 20px 45px rgba(80,55,10,.35);
+    animation:popIn .55s cubic-bezier(.26,1.4,.5,1) both;
+  }
+  @keyframes popIn{ from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .popup .icon{ font-size:2.2rem; }
+  .popup p{ font-size:1.08rem; line-height:1.6; color:#6b4f28; margin:14px 0 22px; }
+  .popup button{
+    background:#e8a93c; border:none; color:#fff; font-family:inherit;
+    padding:10px 26px; border-radius:30px; font-size:.95rem; cursor:pointer;
+    transition:background .25s ease, transform .2s ease;
+  }
+  .popup button:hover{ background:#d69625; transform:translateY(-1px); }
+
+  @media (prefers-reduced-motion: reduce){
+    .sway,.breathe,.leaf,.popup{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <div class="icon">🌼</div>
+    <p>Con cariño para ti, Monse,<br> estar lejos no me impide mostrarte cuanto te quiero.</p>
+    <p>Gracias por seguir aquí, gracias por seguirlo intentando, gracias por ser tú. TQM</p>
+    <button id="closeBtn">Cerrar</button>
+  </div>
+</div>
+
+<div class="scene">
+  <h1 class="title">Para ti, Monse</h1>
+  <p class="subtitle">Un ramo de flores amarillas, con cariño</p>
+
+  <div class="bouquet-wrap">
+    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ramo abundante de flores amarillas">
+      <defs>
+        <radialGradient id="centro" cx="40%" cy="36%" r="66%">
+          <stop offset="0%" stop-color="#bd7a27"/>
+          <stop offset="100%" stop-color="#78460f"/>
+        </radialGradient>
+        <radialGradient id="centroClaro" cx="40%" cy="36%" r="66%">
+          <stop offset="0%" stop-color="#cf9340"/>
+          <stop offset="100%" stop-color="#8e5a1d"/>
+        </radialGradient>
+
+        <!-- Flor frontal (amarillo intenso) -->
+        <g id="florA">
+          <g fill="#fbd94a">
+            <g transform="rotate(0)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(45)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(90)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(135)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(180)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(225)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(270)"><ellipse cy="-30" rx="11" ry="24"/></g>
+            <g transform="rotate(315)"><ellipse cy="-30" rx="11" ry="24"/></g>
+          </g>
+          <circle r="13" fill="url(#centro)"/>
+        </g>
+
+        <!-- Flor media (amarillo cálido) -->
+        <g id="florB">
+          <g fill="#f5c92f">
+            <g transform="rotate(22)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(67)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(112)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(157)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(202)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(247)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(292)"><ellipse cy="-29" rx="10" ry="23"/></g>
+            <g transform="rotate(337)"><ellipse cy="-29" rx="10" ry="23"/></g>
+          </g>
+          <circle r="12" fill="url(#centro)"/>
+        </g>
+
+        <!-- Flor de fondo (amarillo claro, da profundidad) -->
+        <g id="florC">
+          <g fill="#fde79a">
+            <g transform="rotate(10)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(55)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(100)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(145)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(190)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(235)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(280)"><ellipse cy="-28" rx="10" ry="22"/></g>
+            <g transform="rotate(325)"><ellipse cy="-28" rx="10" ry="22"/></g>
+          </g>
+          <circle r="11" fill="url(#centroClaro)"/>
+        </g>
+
+        <!-- Capullo -->
+        <g id="capullo">
+          <ellipse cy="-8" rx="11" ry="15" fill="#f8d556"/>
+          <ellipse cy="-2" rx="9" ry="11" fill="#e9bd3a"/>
+          <path d="M-10 4 Q0 18 10 4 Q0 10 -10 4 Z" fill="#5f9a3c"/>
+        </g>
+
+        <!-- Ramita de follaje -->
+        <g id="ramita" stroke="#5f9a3c" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M0 0 C4 -22 2 -42 0 -60"/>
+          <path d="M0 -14 C-10 -22 -14 -30 -14 -36"/>
+          <path d="M0 -26 C10 -34 14 -42 14 -48"/>
+          <path d="M0 -40 C-9 -46 -12 -54 -12 -60"/>
+        </g>
+      </defs>
+
+      <!-- ===== CAPA DE FONDO: follaje y ramitas ===== -->
+      <g opacity=".85">
+        <use href="#ramita" transform="translate(120,300) rotate(-22)"/>
+        <use href="#ramita" transform="translate(180,250) rotate(-14)"/>
+        <use href="#ramita" transform="translate(290,215) rotate(2)"/>
+        <use href="#ramita" transform="translate(390,245) rotate(16)"/>
+        <use href="#ramita" transform="translate(450,305) rotate(26)"/>
+      </g>
+
+      <!-- Tallos -->
+      <g stroke="#568f36" stroke-width="7" fill="none" stroke-linecap="round">
+        <path d="M280 470 C220 410, 160 360, 105 315"/>
+        <path d="M280 470 C240 395, 200 330, 168 265"/>
+        <path d="M280 470 C266 385, 252 315, 245 210"/>
+        <path d="M280 470 C288 385, 302 320, 318 205"/>
+        <path d="M280 470 C320 400, 362 340, 400 250"/>
+        <path d="M280 470 C340 415, 402 365, 455 320"/>
+        <path d="M280 470 C258 420, 232 385, 212 352"/>
+        <path d="M280 470 C300 420, 326 385, 348 352"/>
+        <path d="M280 470 C278 420, 280 385, 282 330"/>
+      </g>
+
+      <!-- Hojas -->
+      <g>
+        <path class="leaf" d="M200 372 C166 362, 150 336, 163 314 C192 328, 208 354, 200 372 Z" fill="#6ba043"/>
+        <path class="leaf" style="animation-delay:1s" d="M360 366 C394 356, 410 330, 397 308 C368 322, 352 348, 360 366 Z" fill="#5f9a3c"/>
+        <path class="leaf" style="animation-delay:2s" d="M248 410 C220 402, 206 380, 217 360 C243 372, 255 392, 248 410 Z" fill="#74af4b"/>
+        <path class="leaf" style="animation-delay:3s" d="M318 412 C346 404, 360 382, 349 362 C323 374, 311 394, 318 412 Z" fill="#69a341"/>
+        <path class="leaf" style="animation-delay:1.6s" d="M152 340 C126 330, 116 308, 127 292 C149 304, 159 324, 152 340 Z" fill="#5f9a3c"/>
+        <path class="leaf" style="animation-delay:2.6s" d="M408 338 C434 328, 444 306, 433 290 C411 302, 401 322, 408 338 Z" fill="#6ba043"/>
+      </g>
+
+      <!-- ===== FLORES: capa de fondo (claras, pequeñas) ===== -->
+      <g>
+        <g transform="translate(105,300) scale(.72)"><g class="sway slow" style="animation-delay:.2s"><g class="breathe" style="animation-delay:.2s"><use href="#florC"/></g></g></g>
+        <g transform="translate(168,248) scale(.7)"><g class="sway alt" style="animation-delay:1.4s"><g class="breathe" style="animation-delay:1.4s"><use href="#florC"/></g></g></g>
+        <g transform="translate(245,196) scale(.74)"><g class="sway" style="animation-delay:2.2s"><g class="breathe" style="animation-delay:2.2s"><use href="#florC"/></g></g></g>
+        <g transform="translate(318,190) scale(.72)"><g class="sway slow" style="animation-delay:.9s"><g class="breathe" style="animation-delay:.9s"><use href="#florC"/></g></g></g>
+        <g transform="translate(400,238) scale(.7)"><g class="sway alt" style="animation-delay:1.9s"><g class="breathe" style="animation-delay:1.9s"><use href="#florC"/></g></g></g>
+        <g transform="translate(455,306) scale(.72)"><g class="sway" style="animation-delay:2.8s"><g class="breathe" style="animation-delay:2.8s"><use href="#florC"/></g></g></g>
+      </g>
+
+      <!-- Capullos sueltos -->
+      <g>
+        <g transform="translate(136,240) scale(.9)"><g class="sway alt" style="animation-delay:.7s"><use href="#capullo"/></g></g>
+        <g transform="translate(212,168) scale(.85)"><g class="sway" style="animation-delay:1.7s"><use href="#capullo"/></g></g>
+        <g transform="translate(360,180) scale(.9)"><g class="sway slow" style="animation-delay:2.4s"><use href="#capullo"/></g></g>
+        <g transform="translate(432,250) scale(.85)"><g class="sway alt" style="animation-delay:3.1s"><use href="#capullo"/></g></g>
+      </g>
+
+      <!-- ===== FLORES: capa media ===== -->
+      <g>
+        <g transform="translate(140,330) scale(.88)"><g class="sway alt" style="animation-delay:.5s"><g class="breathe" style="animation-delay:.5s"><use href="#florB"/></g></g></g>
+        <g transform="translate(205,272) scale(.92)"><g class="sway" style="animation-delay:1.2s"><g class="breathe" style="animation-delay:1.2s"><use href="#florB"/></g></g></g>
+        <g transform="translate(282,238) scale(.95)"><g class="sway slow" style="animation-delay:2s"><g class="breathe" style="animation-delay:2s"><use href="#florB"/></g></g></g>
+        <g transform="translate(358,268) scale(.92)"><g class="sway alt" style="animation-delay:2.6s"><g class="breathe" style="animation-delay:2.6s"><use href="#florB"/></g></g></g>
+        <g transform="translate(422,330) scale(.88)"><g class="sway" style="animation-delay:3.3s"><g class="breathe" style="animation-delay:3.3s"><use href="#florB"/></g></g></g>
+      </g>
+
+      <!-- ===== FLORES: capa frontal (grandes) ===== -->
+      <g>
+        <g transform="translate(178,388) scale(.98)"><g class="sway" style="animation-delay:.3s"><g class="breathe" style="animation-delay:.3s"><use href="#florA"/></g></g></g>
+        <g transform="translate(252,340) scale(1.08)"><g class="sway alt" style="animation-delay:1.1s"><g class="breathe" style="animation-delay:1.1s"><use href="#florA"/></g></g></g>
+        <g transform="translate(340,336) scale(1.06)"><g class="sway slow" style="animation-delay:1.8s"><g class="breathe" style="animation-delay:1.8s"><use href="#florA"/></g></g></g>
+        <g transform="translate(408,392) scale(.98)"><g class="sway" style="animation-delay:2.5s"><g class="breathe" style="animation-delay:2.5s"><use href="#florA"/></g></g></g>
+        <g transform="translate(296,416) scale(1)"><g class="sway alt" style="animation-delay:3s"><g class="breathe" style="animation-delay:3s"><use href="#florA"/></g></g></g>
+        <g transform="translate(218,428) scale(.9)"><g class="sway slow" style="animation-delay:3.6s"><g class="breathe" style="animation-delay:3.6s"><use href="#florA"/></g></g></g>
+      </g>
+
+      <!-- ===== PAPEL ENVOLVENTE ===== -->
+      <g>
+        <path d="M150 432 L410 432 L352 600 L208 600 Z" fill="#f9ebd2" stroke="#e0c48f" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M150 432 L280 600" fill="none" stroke="#e9d5ab" stroke-width="2"/>
+        <path d="M410 432 L280 600" fill="none" stroke="#e9d5ab" stroke-width="2"/>
+        <path d="M150 432 L410 432 L392 486 L168 486 Z" fill="#fff5e2" opacity=".7"/>
+        <!-- Lazo -->
+        <path d="M244 500 C214 480, 206 522, 248 510 Z" fill="#eaa94c"/>
+        <path d="M316 500 C346 480, 354 522, 312 510 Z" fill="#eaa94c"/>
+        <path d="M252 512 C246 536, 240 548, 234 558" stroke="#eaa94c" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M308 512 C314 536, 320 548, 326 558" stroke="#eaa94c" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="280" cy="505" rx="16" ry="11" fill="#d9903c"/>
+      </g>
+    </svg>
+  </div>
+
+  <footer>Hecho con cariño; Ruben💛</footer>
+</div>
+
+<script>
+  var overlay = document.getElementById('overlay');
+  function cerrar(){
+    overlay.classList.add('hidden');
+    setTimeout(function(){ overlay.style.display = 'none'; }, 450);
+  }
+  document.getElementById('closeBtn').addEventListener('click', cerrar);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) cerrar(); });
+</script>
+
+</body>
+</html>
